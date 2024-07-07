@@ -17,18 +17,18 @@ app.get('/posts', async (_, res) => {
         const posts = await getPost()
         res.status(200).json(posts)
     } catch (error) {
-        res.status(404).send(error)
+        res.status(404).json({ status: false, message: 'No se ha podido realizar la consulta', error})
     }
 })
 
-// app.get('/posts', async (_, res) => {
-//     try {
-//         const posts = await getPostId(req.params.id)
-//         res.status(200).json(posts)
-//     } catch (error) {
-//         res.status(404).send(error)
-//     }
-// })
+app.get('/posts', async (_, res) => {
+    try {
+        const posts = await getPostId(req.params.id)
+        res.status(200).json(posts)
+    } catch (error) {
+        res.status(404).send(error)
+    }
+})
 
 app.post('/posts', async (req, res) => {
     try {
@@ -39,17 +39,17 @@ app.post('/posts', async (req, res) => {
     }
 })
 
-app.put('/post/like/:id', async (req, res) => {
+app.put('/posts/like/:id', async (req, res) => {
     try {
         const { id } = req.params
         await updateLikeById(id)
         res.status(200).send('Actualización exitosa!')
     } catch (error) {
-        res.status(500).send(error.message)
+        res.status(500).send('Post no se puso modificar')
     }
 })
 
-app.delete('/post/:id', async (req, res) => {
+app.delete('/posts/:id', async (req, res) => {
     try {
         const { id } = req.params
         await deleteById(id)

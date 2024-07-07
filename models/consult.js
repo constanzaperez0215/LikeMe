@@ -1,9 +1,9 @@
-const { pool } = require('../db/configDB')
+const { pool, db } = require('../db/configDB')
 
 
 const getPost = async () => {
     try {
-        const query = 'SELECT * FROM posts;'
+        const query = 'SELECT * FROM po_sts ORDER BY id ASC;'
         const { rows } = await pool.query(query)
         return rows
     } catch (error) {
@@ -32,12 +32,9 @@ const getPostId = async (id) => {
     }
 }
 
-const updateLikeById = async (id) => await pool('UPDATE posts SET likes = likes + 1 WHERE id = $1 RETURNING *;', [id])
+const updateLikeById = async (id) => await db('UPDATE posts SET likes = likes + 1 WHERE id = $1 RETURNING *;', [id])
 
-const deleteById = async (id) => await pool('DELETE FROM posts WHERE id = $1 RETURNING *;', [id])
-
-
-
+const deleteById = async (id) => await db('DELETE FROM posts WHERE id = $1 RETURNING *;', [id])
 
 
 module.exports = { getPost, createPost, getPostId, updateLikeById, deleteById }
