@@ -3,7 +3,7 @@ const { pool, db } = require('../db/configDB')
 
 const getPost = async () => {
     try {
-        const query = 'SELECT * FROM po_sts ORDER BY id ASC;'
+        const query = 'SELECT * FROM posts ORDER BY id ASC;'
         const { rows } = await pool.query(query)
         return rows
     } catch (error) {
